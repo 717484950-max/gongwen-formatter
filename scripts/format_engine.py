@@ -212,17 +212,28 @@ def _set_run_font(run, cn_font, size_pt, bold, color=None, western=None):
 
 
 def _set_first_line_indent(paragraph, chars, size_pt):
+    """设置首行缩进，同时清除所有其他缩进（左/右/悬挂）。
+
+    公文规范：正文仅允许首行缩进 2 字，其他缩进一律不得存在。
+    """
     ppr = paragraph._p.get_or_add_pPr()
     ind = ppr.find(qn("w:ind"))
     if ind is None:
         ind = OxmlElement("w:ind")
         ppr.append(ind)
+    # 先通过 python-docx API 清除 left/right/first_line indent
+    pf = paragraph.paragraph_format
+    pf.left_indent = None
+    pf.right_indent = None
+    pf.first_line_indent = None
+    # 再清除 OOXML 层面所有缩进属性（防止 API 未覆盖的残留）
+    for a in ("w:left", "w:leftChars", "w:right", "w:rightChars",
+              "w:hanging", "w:hangingChars", "w:firstLineChars", "w:firstLine"):
+        ind.attrib.pop(qn(a), None)
+    # 最后设置首行缩进
     if chars and chars > 0:
         ind.set(qn("w:firstLineChars"), str(int(chars * 100)))
         ind.set(qn("w:firstLine"), str(int(size_pt * chars * 20)))
-    else:
-        for a in ("w:firstLineChars", "w:firstLine"):
-            ind.attrib.pop(qn(a), None)
 
 
 def _set_line_spacing(paragraph, line_pt):
