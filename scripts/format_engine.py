@@ -691,6 +691,70 @@ def _make_number(style, idx):
     return ""
 
 
+# ---------- 自动编号转手动编号 ----------
+def _convert_auto_numbering(doc, roles):
+    """将 Word 自动编号（numPr）转换为手动序号文字。
+
+    方案 A：按出现顺序推算序号，删除 numPr，在段落文本前插入序号。
+    """
+    # 收集所有有 numPr 的段落，按 numId+ilvl 分组计数
+    counters = {}  # (numId, ilvl) -> count
+    converted = 0
+
+    for p in doc.paragraphs:
+        ppr = p._p.find(qn("w:pPr"))
+        if ppr is None:
+            continue
+        numPr = ppr.find(qn("w:numPr"))
+        if numPr is None:
+            continue
+
+        # 读取 numId 和 ilvl
+        numId_el = numPr.find(qn("w:numId"))
+        ilvl_el = numPr.find(qn("w:ilvl"))
+        numId = numId_el.get(qn("w:val")) if numId_el is not None else "0"
+        ilvl = ilvl_el.get(qn("w:val")) if ilvl_el is not None else "0"
+        key = (numId, ilvl)
+
+        # 推算序号
+        counters[key] = counters.get(key, 0) + 1
+        idx = counters[key]
+
+        # 根据段落样式推断序号格式
+        role = classify_paragraph(p)
+        if role in ("h1", "h2", "h3", "h4"):
+            style = roles[role].get("auto_number", "")
+            num_text = _make_number(style, idx)
+        else:
+            # 非标题段落：按 ilvl 推断格式
+            # ilvl 0 → 1. 2. 3.  /  ilvl 1 → （1）（2）/  ilvl 2+ → •
+            ilvl_int = int(ilvl)
+            if ilvl_int == 0:
+                num_text = f"{idx}. "
+            elif ilvl_int == 1:
+                num_text = f"（{idx}）"
+            else:
+                num_text = f"{idx}. "
+
+        # 删除 numPr 元素
+        ppr.remove(numPr)
+
+        # 在段落文本前插入序号（跳过已有手输序号的段落）
+        if p.runs:
+            first = p.runs[0]
+            stripped = _strip_leading_number(first.text)
+            if stripped == first.text:
+                # 没有手输序号，插入推算的序号
+                first.text = num_text + first.text
+            # 已有手输序号则跳过，保留原有序号
+        else:
+            p.add_run(num_text)
+
+        converted += 1
+
+    return converted
+
+
 def _apply_auto_numbering(doc, roles):
     counters = {"h1": 0, "h2": 0, "h3": 0, "h4": 0}
     order = ["h1", "h2", "h3", "h4"]
@@ -826,6 +890,9 @@ def format_document(input_path, preset, output_path=None,
         _fix_smart_quotes(p)
         counts[role] = counts.get(role, 0) + 1
 
+    # 自动编号转换：将 Word 自动编号转为手动序号文字（方案 A）
+    auto_num_converted = _convert_auto_numbering(doc, roles)
+
     if auto_number:
         _apply_auto_numbering(doc, roles)
 
@@ -889,6 +956,8 @@ def format_document(input_path, preset, output_path=None,
         warnings.append(f"已规范化图题 {counts['fig_caption']} 处、表题 {counts['tbl_caption']} 处（黑体居中）；如有漏判请确认题注以“图/表+编号”开头。")
     if preset.get("page_number", {}).get("enabled"):
         warnings.append("已添加页码（单页右、双页左）。在 Word 中查看页码可能需先更新域：全选→F9（Mac：fn+F9）。")
+    if auto_num_converted > 0:
+        warnings.append(f"已将 {auto_num_converted} 个 Word 自动编号转换为手动序号文字，请核对编号是否正确。")
     if auto_number:
         warnings.append("已自动生成层次序号（一、/（一）/1./（1）），并替换了原手输序号，请核对是否正确。")
     if mode == "bundled":
@@ -901,6 +970,7 @@ def format_document(input_path, preset, output_path=None,
         "input": input_path, "output": output_path, "font_mode": mode_label,
         "counts": counts, "tables": table_count, "metadata_cleaned": clean_metadata,
         "auto_number": auto_number, "embedded_fonts": embedded_fonts, "warnings": warnings,
+        "auto_num_converted": auto_num_converted,
     }
     return output_path, report
 
