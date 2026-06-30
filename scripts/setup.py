@@ -30,9 +30,7 @@ def _find_font_dir():
         candidates.append(env_dir)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     skill_root = os.path.dirname(script_dir)
-    # 全局安装时直接用 skill 自带的 assets/fonts
     candidates.append(os.path.join(skill_root, "assets", "fonts"))
-    # 项目内开发时上溯到项目根 fonts/embedded
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))))
     candidates.append(os.path.join(project_root, "fonts", "embedded"))
     for d in candidates:
@@ -86,7 +84,6 @@ def iter_bundled_fonts():
 
 def install_fonts_to_system():
     """将内置字体安装到系统字体目录。返回 (安装数, 跳过数)。"""
-    font_dir = _find_font_dir()
     dest = font_dest_dir()
     os.makedirs(dest, exist_ok=True)
     installed = 0
@@ -108,7 +105,6 @@ def check_environment():
     """检查环境状态，返回可读报告。"""
     lines = ["=" * 50, "🔍 环境检查", "=" * 50, ""]
 
-    # Python 依赖
     lines.append("Python 依赖：")
     for pkg in PIPS:
         mod = pkg.replace("-", "_").split(".")[0]
@@ -118,7 +114,6 @@ def check_environment():
         except ImportError:
             lines.append(f"  ❌ {pkg} — 未安装")
 
-    # 字体
     lines.append("")
     lines.append("公文字体：")
     font_dir = _find_font_dir()
@@ -130,8 +125,6 @@ def check_environment():
             installed_count += 1
     lines.append(f"  内置字体文件：{len(all_fonts)} 个")
     lines.append(f"  已安装到系统：{installed_count} 个")
-    if installed_count < len(all_fonts):
-        lines.append(f"  ⚠ {len(all_fonts) - installed_count} 个字体尚未安装到系统")
 
     lines.append("")
     lines.append(f"字体目录：{font_dir}")
@@ -139,8 +132,52 @@ def check_environment():
     return "\n".join(lines)
 
 
+def print_feature_intro():
+    """打印功能介绍，在部署完成后展示给用户。"""
+    print()
+    print("=" * 50)
+    print("📋 公文格式排版 Skill · 功能介绍")
+    print("=" * 50)
+    print()
+    print("📌 这是什么？")
+    print("   本工具可将 Word(.docx) 文档一键转换为符合")
+    print("   GB/T 9704-2012 标准的党政机关公文格式。")
+    print("   全程本地处理，不联网，不修改原稿。")
+    print()
+    print("🚀 怎么使用？")
+    print("   1. 在对话中发送一个 .docx 文件")
+    print("   2. 对 AI 说："排版公文"、"帮我排版"、"公文格式"")
+    print("   3. AI 会弹出格式选择卡片，点击确认即可")
+    print("   4. 排版完成后，输出"原文件名-公文版.docx"")
+    print()
+    print("✨ 能做什么？")
+    print("   · 红头公文（机关名 + 红色分隔线）")
+    print("   · 自动识别：大标题、主送机关、落款署名与日期")
+    print("   · 三线表、图片居中、图表题注")
+    print("   · 智能引号转换（英文" → 中文""）")
+    print("   · 输出文档自动嵌入字体，跨电脑显示一致")
+    print("   · 支持 .docx / .wps / .doc 格式")
+    print()
+    print("⚠ 重点提示")
+    print("   1. 排版前必须先在 Word 中设置大纲级别：")
+    print("      大标题设为「标题」样式")
+    print("      各级小标题设为「标题1/2/3/4」样式")
+    print("      否则工具无法识别标题层级，全部内容会被当作正文处理")
+    print()
+    print("   2. 首次安装后请重启 Word/WPS：")
+    print("      macOS：重启 Word/WPS 即可")
+    print("      Windows：重启 Word/WPS，或重启电脑")
+    print("      未重启会导致排版后字体无法正确显示")
+    print()
+    print("   3. 排版不修改原稿：")
+    print("      输出文件为"原文件名-公文版.docx"")
+    print("      原文件保持不变")
+    print()
+    print("=" * 50)
+
+
 def full_setup():
-    """完整部署：安装依赖 + 安装内置字体到系统。"""
+    """完整部署：安装依赖 + 安装内置字体到系统 + 功能介绍。"""
     print("=" * 50)
     print("🚀 公文格式工具 Skill · 首次部署")
     print("=" * 50)
@@ -173,6 +210,9 @@ def full_setup():
     print("  macOS：重启 Word/WPS 即可")
     print("  Windows：重启 Word/WPS，或重启电脑")
     print("=" * 50)
+
+    # 功能介绍
+    print_feature_intro()
     return 0
 
 

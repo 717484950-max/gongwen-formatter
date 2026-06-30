@@ -1,5 +1,5 @@
 {
-  "preset_name": "红头公文（通知书式）",
+  "preset_name": "默认格式（带红头公文）",
   "description": "带红头（红色发文机关名 + 红色分隔线）的部门式公文模板，适用于通知书/通知/函等。可自动识别发文字号、主送机关、落款署名与日期并规范排版。",
   "font_mode_default": "bundled",
   "_font_mode_说明": "bundled=使用随工具内置并安装的标准公文字体(推荐); mac=Mac系统替代字体; standard=电脑已装的标准字体名",
