@@ -1,0 +1,110 @@
+{
+  "preset_name": "GB/T 9704-2012 标准公文（正文）",
+  "description": "党政机关公文格式国家标准，广东省/深圳市通用。已内置标准公文字体，贴合国标。",
+  "font_mode_default": "bundled",
+  "_font_mode_说明": "bundled=使用随工具内置并安装的标准公文字体(推荐); mac=Mac系统替代字体; standard=电脑已装的标准字体名",
+  "western_font": "Times New Roman",
+  "page": {
+    "size": "A4",
+    "width_mm": 210,
+    "height_mm": 297,
+    "margin_top_mm": 37,
+    "margin_bottom_mm": 35,
+    "margin_left_mm": 28,
+    "margin_right_mm": 26
+  },
+  "line_spacing_pt": 28.8,
+  "page_number": {
+    "enabled": true,
+    "font": "宋体",
+    "mac_font": "STSong",
+    "bundled_font": "宋体",
+    "size_pt": 14,
+    "format": "— {n} —",
+    "odd_align": "right",
+    "even_align": "left"
+  },
+  "roles": {
+    "title": {
+      "label": "文章大标题",
+      "font": "方正小标宋简体", "mac_font": "STZhongsong", "bundled_font": "方正小标宋简体",
+      "size_pt": 22, "bold": false, "color": "000000",
+      "align": "center", "first_line_indent_chars": 0,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": ""
+    },
+    "h1": {
+      "label": "一级标题",
+      "font": "黑体", "mac_font": "STHeiti", "bundled_font": "黑体",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 2,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": "一、", "auto_number": "cn_dun"
+    },
+    "h2": {
+      "label": "二级标题",
+      "font": "楷体_GB2312", "mac_font": "STKaiti", "bundled_font": "楷体_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 2,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": "（一）", "auto_number": "cn_paren"
+    },
+    "h3": {
+      "label": "三级标题",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": true, "color": "000000",
+      "align": "left", "first_line_indent_chars": 2,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": "1.", "auto_number": "digit_dot"
+    },
+    "h4": {
+      "label": "四级标题",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 2,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": "（1）", "auto_number": "digit_paren"
+    },
+    "body": {
+      "label": "正文",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "justify", "first_line_indent_chars": 2
+    },
+    "table": {
+      "label": "表格内文字",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 14, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 0
+    },
+    "figure": {
+      "label": "图片段落",
+      "align": "center", "first_line_indent_chars": 0,
+      "space_before_pt": 6, "space_after_pt": 0
+    },
+    "fig_caption": {
+      "label": "图题",
+      "font": "黑体", "mac_font": "STHeiti", "bundled_font": "黑体",
+      "size_pt": 10.5, "bold": false, "color": "000000",
+      "align": "center", "first_line_indent_chars": 0,
+      "space_before_pt": 0, "space_after_pt": 6,
+      "match_regex": "^\\s*图\\s*[0-9０-９一二三四五六七八九十]"
+    },
+    "tbl_caption": {
+      "label": "表题",
+      "font": "黑体", "mac_font": "STHeiti", "bundled_font": "黑体",
+      "size_pt": 10.5, "bold": false, "color": "000000",
+      "align": "center", "first_line_indent_chars": 0,
+      "space_before_pt": 6, "space_after_pt": 0,
+      "match_regex": "^\\s*表\\s*[0-9０-９一二三四五六七八九十]"
+    }
+  },
+  "table_style": {
+    "three_line": true,
+    "header_bold": true,
+    "header_align": "center",
+    "outer_line_pt": 1.5,
+    "header_line_pt": 0.75,
+    "inner_lines": false
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "preset_name": "红头公文（通知书式）",
+  "description": "带红头（红色发文机关名 + 红色分隔线）的部门式公文模板，适用于通知书/通知/函等。可自动识别发文字号、主送机关、落款署名与日期并规范排版。",
+  "font_mode_default": "bundled",
+  "_font_mode_说明": "bundled=使用随工具内置并安装的标准公文字体(推荐); mac=Mac系统替代字体; standard=电脑已装的标准字体名",
+  "western_font": "Times New Roman",
+  "page": {
+    "size": "A4",
+    "width_mm": 210,
+    "height_mm": 297,
+    "margin_top_mm": 22,
+    "margin_bottom_mm": 30,
+    "margin_left_mm": 28,
+    "margin_right_mm": 26
+  },
+  "line_spacing_pt": 28,
+  "letterhead": {
+    "enabled": true,
+    "org_name": "深圳市腾讯计算机系统有限公司",
+    "font": "方正大标宋简体", "mac_font": "STSong", "bundled_font": "方正大标宋简体",
+    "size_pt": 24, "bold": false, "color": "FF0000", "align": "center",
+    "space_before_pt": 10, "space_after_pt": 2,
+    "line": { "enabled": true, "color": "FF0000", "width_pt": 3, "space_before_pt": 0, "space_after_pt": 2 }
+  },
+  "footer_line": {
+    "enabled": false, "color": "FF0000", "width_pt": 3, "distance_mm": 22
+  },
+  "page_number": {
+    "enabled": false,
+    "font": "宋体",
+    "mac_font": "STSong",
+    "bundled_font": "宋体",
+    "size_pt": 14,
+    "format": "— {n} —",
+    "odd_align": "right",
+    "even_align": "left"
+  },
+  "auto_match_roles": ["doc_number", "recipient", "signoff_org", "signoff", "fig_caption", "tbl_caption"],
+  "roles": {
+    "title": {
+      "label": "标题（通知书名）",
+      "font": "方正小标宋简体", "mac_font": "STZhongsong", "bundled_font": "方正小标宋简体",
+      "size_pt": 22, "bold": false, "color": "000000",
+      "align": "center", "first_line_indent_chars": 0,
+      "space_before_pt": 0, "space_after_pt": 18,
+      "numbering": ""
+    },
+    "h1": {
+      "label": "一级标题",
+      "font": "黑体", "mac_font": "STHeiti", "bundled_font": "黑体",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 2,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": "一、", "auto_number": "cn_dun"
+    },
+    "h2": {
+      "label": "二级标题",
+      "font": "楷体_GB2312", "mac_font": "STKaiti", "bundled_font": "楷体_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 2,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": "（一）", "auto_number": "cn_paren"
+    },
+    "h3": {
+      "label": "三级标题",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 2,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": "1.", "auto_number": "digit_dot"
+    },
+    "h4": {
+      "label": "四级标题",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 2,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "numbering": "（1）", "auto_number": "digit_paren"
+    },
+    "body": {
+      "label": "正文",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "justify", "first_line_indent_chars": 2
+    },
+    "doc_number": {
+      "label": "发文字号",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "right", "first_line_indent_chars": 0,
+      "space_before_pt": 0, "space_after_pt": 6,
+      "match_regex": "[〔\\[【]\\s*\\d{4}\\s*[〕\\]】].*号\\s*$"
+    },
+    "recipient": {
+      "label": "主送机关",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 0,
+      "space_before_pt": 24, "space_after_pt": 24,
+      "match_regex": "^[^，。、；：\\s]{2,40}(公司|单位|机关|部门|大队|支队|分局|公安局|局|厅|委|办|中心|学校|学院|医院|集团|政府|管委会|工作室|研究院|事务所)\\s*[：:]\\s*$"
+    },
+    "signoff_org": {
+      "label": "落款署名",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "right", "first_line_indent_chars": 0,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "match_regex": "^[^，。、；：\\s]{2,40}(公司|单位|机关|部门|大队|支队|分局|公安局|局|厅|委|办|中心|学校|学院|医院|集团|政府|管委会|工作室|研究院|事务所)\\s*$"
+    },
+    "signoff": {
+      "label": "落款日期",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 16, "bold": false, "color": "000000",
+      "align": "right", "first_line_indent_chars": 0,
+      "space_before_pt": 0, "space_after_pt": 0,
+      "match_regex": "^\\s*[0-9０-９]{2,4}\\s*年.{1,3}月.{1,3}日\\s*$"
+    },
+    "table": {
+      "label": "表格内文字",
+      "font": "仿宋_GB2312", "mac_font": "STFangsong", "bundled_font": "仿宋_GB2312",
+      "size_pt": 14, "bold": false, "color": "000000",
+      "align": "left", "first_line_indent_chars": 0
+    },
+    "figure": {
+      "label": "图片段落",
+      "align": "center", "first_line_indent_chars": 0,
+      "space_before_pt": 6, "space_after_pt": 0
+    },
+    "fig_caption": {
+      "label": "图题",
+      "font": "黑体", "mac_font": "STHeiti", "bundled_font": "黑体",
+      "size_pt": 10.5, "bold": false, "color": "000000",
+      "align": "center", "first_line_indent_chars": 0,
+      "space_before_pt": 0, "space_after_pt": 6,
+      "match_regex": "^\\s*图\\s*[0-9０-９一二三四五六七八九十]"
+    },
+    "tbl_caption": {
+      "label": "表题",
+      "font": "黑体", "mac_font": "STHeiti", "bundled_font": "黑体",
+      "size_pt": 10.5, "bold": false, "color": "000000",
+      "align": "center", "first_line_indent_chars": 0,
+      "space_before_pt": 6, "space_after_pt": 0,
+      "match_regex": "^\\s*表\\s*[0-9０-９一二三四五六七八九十]"
+    }
+  },
+  "table_style": {
+    "three_line": true,
+    "header_bold": true,
+    "header_align": "center",
+    "outer_line_pt": 1.5,
+    "header_line_pt": 0.75,
+    "inner_lines": false
+  }
+}
